@@ -3,7 +3,14 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
-  toto
+  {/*navbar*/}
+  {/*banner*/}
+  {/*rows*/}
+  {/*video*/}
+  {/*quick view*/}
+
+  {/*footer*/}
+
     </div>
   );
 }
