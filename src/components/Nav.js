@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import './Nav.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,12 +10,17 @@ function Nav() {
     const [navBlack, setNavBlack] = useState(false);
     const [toggleMenu, setToggleMenu] = useState(false);
 
-    const transitionNav = () => {
-        window.scrollY > 100 ? setNavBlack(true) : setNavBlack(false);
-    };
-    useState(() => {
-        document.addEventListener("scroll", transitionNav);
-    });
+    const transitionNav = useCallback(() => {
+        return setNavBlack(window.scrollY > 100);
+      }, []);
+
+    useEffect(() => {
+        document.addEventListener('scroll', transitionNav);
+      
+        return () => {
+          document.removeEventListener('scroll', transitionNav);
+        }
+      }, [transitionNav]);
 
     const handleClick = () => {
         console.log(toggleMenu);
