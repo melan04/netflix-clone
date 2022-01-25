@@ -14,6 +14,7 @@ function Banner() {
       const data = await request.json();
       const movieList = data.results;
 
+      console.log(movieList)
 
       setMovie(movieList[Math.floor(Math.random() * movieList.length - 1)]);
     }
@@ -27,9 +28,9 @@ function Banner() {
   }
 
   const bannerStyle = {
-      backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
-      backgroundSize: "cover",
-      backgroundPosition: "center center",
+    backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
   };
 
   console.log(movie);
