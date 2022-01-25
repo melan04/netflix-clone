@@ -13,11 +13,10 @@ function Banner() {
       const request = await fetch(requests.fetchTrending);
       const data = await request.json();
       const movieList = data.results;
-      console.log(movieList);
+
 
       setMovie(movieList[Math.floor(Math.random() * movieList.length - 1)]);
     }
-
     fetchData();
   }, []);
 
@@ -27,10 +26,16 @@ function Banner() {
       : 'No description';
   }
 
+  const bannerStyle = {
+      backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+  };
+
   console.log(movie);
 
   return (
-    <header className="banner">
+    <header className="banner" style={bannerStyle}>
       <div className="banner__content">
         <h1 className="banner__title">
           {movie?.title || movie?.original_name}
