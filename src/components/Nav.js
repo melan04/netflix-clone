@@ -7,16 +7,18 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 function Nav() {
 
-    const [navBlack, setNavBlack] = useState(false);
+    /*détecte la transition pour scroller */
+
+    const [navBlack, setNavBlack] = useState(false); /* detecte la nav bar quand on scrolle */
     const [toggleMenu, setToggleMenu] = useState(false);
 
     const transitionNav = useCallback(() => {
-        return setNavBlack(window.scrollY > 100);
+        return setNavBlack(window.scrollY > 100); // vérifie au niveau de la fenetre qu'on est au dessus de 100
       }, []);
 
     useEffect(() => {
         document.addEventListener('scroll', transitionNav);
-      
+
         return () => {
           document.removeEventListener('scroll', transitionNav);
         }
