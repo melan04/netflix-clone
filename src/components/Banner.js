@@ -4,9 +4,15 @@ import './Banner.scss';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import requests from '../config/Requests';
+import QuickView from './QuickView';
 
 function Banner() {
   const [movie, setMovie] = useState(null);
+  const [popup, setPopup] = useState(false);
+
+  function handleClickPopup() {
+    popup ? setPopup(false) : setPopup(true);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -14,7 +20,7 @@ function Banner() {
       const data = await request.json();
       const movieList = data.results;
 
-      console.log(movieList)
+      console.log(movieList);
 
       setMovie(movieList[Math.floor(Math.random() * movieList.length - 1)]);
     }
@@ -33,7 +39,7 @@ function Banner() {
     backgroundPosition: 'center center',
   };
 
-  console.log(movie);
+  console.log(popup);
 
   return (
     <header className="banner" style={bannerStyle}>
@@ -44,15 +50,21 @@ function Banner() {
         <p className="banner_description">
           {truncateText(movie?.overview, 100)}
         </p>
-        <div className="banne r__buttons">
+        <div className="banner__buttons">
           <button className="banner__button banner__button--play">
             <PlayArrowIcon /> Lecture
           </button>
-          <button className="banner__button">
+          <button className="banner__button" onClick={handleClickPopup}>
             <HelpOutlineIcon /> Plus d'infos{' '}
           </button>
         </div>
       </div>
+      <QuickView
+        bannerStyle={bannerStyle}
+        movie={movie}
+        popup={handleClickPopup}
+        popupStatut={popup}
+      />
     </header>
   );
 }
