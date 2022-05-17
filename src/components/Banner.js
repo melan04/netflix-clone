@@ -39,12 +39,12 @@ function Banner() {
     <header className="banner" style={bannerStyle}>
       <div className="banner__content">
         <h1 className="banner__title">
-          {movie?.title || movie?.original_name}
+          {movie?.title || movie?.name || movie?.original_name}
         </h1>
         <p className="banner_description">
           {truncateText(movie?.overview, 100)}
         </p>
-        <div className="banner__buttons">
+        <div className="banne r__buttons">
           <button className="banner__button banner__button--play">
             <PlayArrowIcon /> Lecture
           </button>
