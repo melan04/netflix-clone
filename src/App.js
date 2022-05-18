@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Banner from './components/Banner';
 import Row from './components/Row';
 import requests from './config/Requests';
+import Video from './components/Video';
 import {
   BrowserRouter as Router,
   Switch,
@@ -36,16 +37,12 @@ function App() {
             />
             <Row title="Comédies" fetchUrl={requests.fetchComedyMovies} />
             <Row title="Documentaires" fetchUrl={requests.fetchDocumentaries} />
-            {/*video*/}
-            {/*quick view*/}
 
             <Footer />
           </Route>
-          <Route path="/video/:id" component={video} />
-          <Route path='*'>
-            <Redirect to ="/"/>
-
-          
+          <Route path="/video/:id" component={Video} />
+          <Route path="*">
+            <Redirect to="/" />
           </Route>
         </Switch>
       </Router>

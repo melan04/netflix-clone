@@ -1,6 +1,7 @@
 import React from 'react';
 import './Row.scss';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Row({ title, fetchUrl, isPoster }) {
   const [movies, setMovies] = useState([]);
@@ -24,20 +25,21 @@ function Row({ title, fetchUrl, isPoster }) {
       <div className="row__images">
         {movies.map(movie => (
           <div key={movie.id}>
-            {isPoster ? (
-            <img
-              src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
-              className="row__image"
-              alt="{movie?.title || movie?.original_name}"
-            />
-        ) : (
-          <img
-              src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
-              className="row__image"
-              alt="{movie?.title || movie?.original_name}"
-            />
-        )}
-
+            <Link to={`/video/${movie?.id}`}>
+              {isPoster ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
+                  className="row__image"
+                  alt="{movie?.title || movie?.original_name}"
+                />
+              ) : (
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
+                  className="row__image"
+                  alt={movie?.title || movie?.original_name}
+                />
+              )}
+            </Link>
           </div>
         ))}
       </div>
