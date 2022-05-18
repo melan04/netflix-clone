@@ -1,87 +1,72 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import "./Banner.scss";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import './Banner.scss';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import requests from "../config/Requests";
-
+import requests from '../config/Requests';
+import QuickView from './QuickView';
 
 function Banner() {
+  const [movie, setMovie] = useState(null);
+  const [popup, setPopup] = useState(false);
 
-    const [movie, setMovie] = useState(null);
+  function handleClickPopup() {
+    popup ? setPopup(false) : setPopup(true);
+  }
 
-    useEffect(() => {
-        async function fetchData() {
-            const request = await fetch(requests.fetchTrending);
-            const data = await request.json();
-            const movieList = data.results
-            console.log(movieList);
+  useEffect(() => {
+    async function fetchData() {
+      const request = await fetch(requests.fetchTrending);
+      const data = await request.json();
+      const movieList = data.results;
 
+      console.log(movieList);
 
-            setMovie(
-                movieList[
-                Math.floor(Math.random() * movieList.length - 1)
-                ]
-            );
-        }
+      setMovie(movieList[Math.floor(Math.random() * movieList.length - 1)]);
+    }
+    fetchData();
+  }, []);
 
-        fetchData();
-    }, []);
+  function truncateText(string, n) {
+    return string?.length > n
+      ? string.substr(0, n - 1) + '...'
+      : 'No description';
+  }
 
-    console.log(movie);
+  const bannerStyle = {
+    backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  };
 
+  console.log(popup);
 
-    return (
-        <header className="banner">
-            <div className="banner__content">
-                <h1 className="banner__title"> Titre </h1>
-                <p className="banner_description">
-                    Lorem nvjkfqbvfkjBV JF vfj
-                </p>
-                <div className="banner__buttons">
-                    <button className="banner__button banner__button--play"><PlayArrowIcon /> Lecture</button>
-                    <button className="banner__button"><HelpOutlineIcon /> Plus d'infos </button>
-                </div>
-            </div>
-
-        </header>
-    );
+  return (
+    <header className="banner" style={bannerStyle}>
+      <div className="banner__content">
+        <h1 className="banner__title">
+          {movie?.title || movie?.name || movie?.original_name}
+        </h1>
+        <p className="banner_description">
+          {truncateText(movie?.overview, 100)}
+        </p>
+        <div className="banner__buttons">
+          <button className="banner__button banner__button--play">
+            <PlayArrowIcon /> Lecture
+          </button>
+          <button className="banner__button" onClick={handleClickPopup}>
+            <HelpOutlineIcon /> Plus d'infos{' '}
+          </button>
+        </div>
+      </div>
+      <QuickView
+        bannerStyle={bannerStyle}
+        movie={movie}
+        popup={handleClickPopup}
+        popupStatut={popup}
+      />
+    </header>
+  );
 }
 
 export default Banner;
-
-// const getProductList = async () => {
-//     const result = await fetch("http://localhost:3000/api/teddies");
-//     const productList = await result.json();
-//     return productList;
-//   };
-
-/**/
-
-// const postData = { firstName: 'Korben', lastName: 'Dallas' };
-// const apiURL = 'https://top-movies.com/api/the-fifth-element/character';
-
-// axios.post(apiURL, {
-//   ...postData
-// })
-// 	.then(response => console.log('Success: ', response))
-// 	.catch(error => console.log('Error: ', error));
-
-// /**/
-
-// const postData = { firstName: 'Korben', lastName: 'Dallas' };
-// const apiURL = 'https://top-movies.com/api/the-fifth-element/character';
-
-// fetch(apiURL, {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(postData),
-// })
-// 	.then(response => response.json())
-// 	.then(jsonResponse => console.log('Success: ', jsonResponse))
-// 	.catch(error => console.log('Error: ', error));
-
-
-/**/
